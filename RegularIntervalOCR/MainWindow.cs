@@ -50,13 +50,6 @@ namespace RegularIntervalOCR
         public void MyClock(object sender, EventArgs e)
         {
             UpdateOCR();
-
-            //Console.WriteLine(DateTime.Now);
-            // 出力例：
-            // 2005/11/08 19:59:10
-            // 2005/11/08 19:59:11
-            // 2005/11/08 19:59:12
-            // ……
         }
 
 
@@ -64,33 +57,6 @@ namespace RegularIntervalOCR
         {
             Run();
 
-            //int num = 0;
-
-            //// タイマーの間隔(ミリ秒)
-            ////System.Timers.Timer timer = new System.Timers.Timer(3000);
-            //Timer timer = new Timer(3000);
-
-            //// タイマーの処理
-            ////timer.Elapsed += (sender, e) =>
-            //timer.Elapsed += (s, e2) =>
-            //{
-            //    if (num < 5)
-            //    {
-            //        UpdateOCR();
-            //        //Console.WriteLine("5回繰り返します");
-            //        num++;
-            //    }
-            //    else
-            //    {
-            //        timer.Stop();
-            //        //Console.WriteLine("処理を終了しました");
-            //    }
-            //};
-
-            //// タイマーを開始する
-            //timer.Start();
-
-            ////Console.ReadKey();
         }
 
     }

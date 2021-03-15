@@ -24,9 +24,6 @@ namespace RegularIntervalOCR
         public void SaveText(string txt)
         {
             var fileName = "ocr_result.txt";
-            //StreamWriter sw = new StreamWriter(fileName, Encoding.GetEncoding("utf-8"));
-            //sw.Write(txt);
-            //sw.Close();
 
             // 文字コードを指定
             Encoding enc = Encoding.GetEncoding("utf-8");
@@ -44,8 +41,6 @@ namespace RegularIntervalOCR
         public async Task<SoftwareBitmap> ConvertToSoftwareBitmap(Bitmap bmp)
         {
             // 取得したキャプチャ画像をファイルとして保存
-            //var folder = Directory.GetCurrentDirectory();
-            //folder = Directory.GetCurrentDirectory();
             var fileName = "screenshot.bmp";
             bmp.Save($@"{folder}\{fileName}", ImageFormat.Bmp);
 
@@ -67,7 +62,10 @@ namespace RegularIntervalOCR
         {
             var sbmp = await ConvertToSoftwareBitmap(bmp);
 
-            OcrEngine ocrEngine = OcrEngine.TryCreateFromUserProfileLanguages();
+            Windows.Globalization.Language language = new Windows.Globalization.Language("en");
+            OcrEngine ocrEngine = OcrEngine.TryCreateFromLanguage(language);
+
+            //OcrEngine ocrEngine = OcrEngine.TryCreateFromUserProfileLanguages();
             var ocrResult = await ocrEngine.RecognizeAsync(sbmp);
             return ocrResult;
         }
