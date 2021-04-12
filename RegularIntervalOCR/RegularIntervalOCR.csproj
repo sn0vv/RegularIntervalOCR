@@ -61,6 +61,7 @@
     <Compile Include="Canvas.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="HttpServer.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,5 +101,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Grapevine">
+      <Version>4.2.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web\index.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(ProjectDir)web. $(TargetDir)web /D/E/C/I/H/Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>

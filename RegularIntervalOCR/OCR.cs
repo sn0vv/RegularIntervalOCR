@@ -23,7 +23,8 @@ namespace RegularIntervalOCR
 
         public void SaveText(string txt)
         {
-            var fileName = "ocr_result.txt";
+            //var fileName = "ocr_result.txt";
+            var fileName = "output.html";
 
             // 文字コードを指定
             Encoding enc = Encoding.GetEncoding("utf-8");

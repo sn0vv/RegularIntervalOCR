@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Windows.Forms;
-//using System.Timers;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.InteropServices;
+using Grapevine.Server;
 
 namespace RegularIntervalOCR
 {
     public partial class MainWindow : Form
     {
         private Screenshot screenshot;
+        private RestServer server;
 
         public MainWindow()
         {
@@ -59,5 +63,58 @@ namespace RegularIntervalOCR
 
         }
 
+  
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ServerSettings settings = new ServerSettings()
+            {
+                Port = maskedTextBox1.Text,
+                PublicFolder = new PublicFolder("web")
+            };
+
+            server = new RestServer(settings);
+            server.Start();
+
+            button5.Enabled = false;
+            button4.Enabled = true;
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            server.Stop();
+            button5.Enabled = true;
+            button4.Enabled = false;
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            //数字と空白しか入力できないようにする
+            this.maskedTextBox1.Mask = "9999";
+            //Int32型に変換できるか検証する
+            this.maskedTextBox1.ValidatingType = typeof(int);
+            //TypeValidationCompletedイベントハンドラを追加する
+            this.maskedTextBox1.TypeValidationCompleted += maskedTextBox1_TypeValidationCompleted;
+        }
+
+        private void maskedTextBox1_TypeValidationCompleted(
+            object sender, TypeValidationEventArgs e)
+        {
+            //Int32型に変換できるか確かめる
+            if (!e.IsValidInput)
+            {
+                //Int32型への変換に失敗した時は、フォーカスが移動しないようにする
+                MessageBox.Show("数値を入力してください");
+                e.Cancel = true;
+            }
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (server != null)
+            {
+                server.Stop();
+            }
+        }
     }
 }
